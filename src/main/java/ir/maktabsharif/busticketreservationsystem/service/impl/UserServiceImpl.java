@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
     public Optional<User> findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
-
+//region register
     @Override
     public User registerUser(RegisterDto registerDto) {
         User user = baseUserService.register(registerDto);
@@ -50,7 +50,9 @@ public class UserServiceImpl implements UserService {
         user.setUserStatus(USER_STATUS.DEACTIVATED);
         return userRepository.save(user);
     }
+//endregion
 
+//region login
     @Override
     public User loginUser(LoginDto loginDto) {
         User user = baseUserService.login(loginDto);
@@ -83,7 +85,7 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException("your account is not active");
         return user;
     }
-
+//endregion
 
     @Override
     public User save(User entity) {

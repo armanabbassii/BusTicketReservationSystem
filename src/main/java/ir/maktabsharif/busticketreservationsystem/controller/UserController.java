@@ -1,12 +1,12 @@
 package ir.maktabsharif.busticketreservationsystem.controller;
 
 import ir.maktabsharif.busticketreservationsystem.domain.entity.User;
-import ir.maktabsharif.busticketreservationsystem.dto.AdminRegisterDto;
-import ir.maktabsharif.busticketreservationsystem.dto.AdminResponseDto;
+import ir.maktabsharif.busticketreservationsystem.dto.LoginDto;
+import ir.maktabsharif.busticketreservationsystem.dto.LoginResponseDto;
 import ir.maktabsharif.busticketreservationsystem.dto.RegisterDto;
 import ir.maktabsharif.busticketreservationsystem.dto.RegisterResponseDto;
-import ir.maktabsharif.busticketreservationsystem.dto.UserResponseDto;
-import ir.maktabsharif.busticketreservationsystem.mapper.UserMapper;
+import ir.maktabsharif.busticketreservationsystem.mapper.UserLoginMapper;
+import ir.maktabsharif.busticketreservationsystem.mapper.UserRegisterMapper;
 import ir.maktabsharif.busticketreservationsystem.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,29 +18,50 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
-    private final UserMapper userMapper;
-
+    private final UserRegisterMapper userRegisterMapper;
+    private final UserLoginMapper userLoginMapper;
+//region user register controller
     @PostMapping("/user/register")
-    public ResponseEntity<RegisterResponseDto> registerUser(
-            @RequestBody RegisterDto registerDto) {
+    public ResponseEntity<RegisterResponseDto> registerUser(@RequestBody RegisterDto registerDto) {
         User entity = userService.registerUser(registerDto);
-        RegisterResponseDto response = userMapper.toDto(entity);
+        RegisterResponseDto response = userRegisterMapper.toDto(entity);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PostMapping("/admin/register")
-    public ResponseEntity<RegisterResponseDto> registerAdmin(
-            @RequestBody RegisterDto registerDto) {
+    public ResponseEntity<RegisterResponseDto> registerAdmin(@RequestBody RegisterDto registerDto) {
         User entity = userService.registerAdmin(registerDto);
-        RegisterResponseDto response = userMapper.toDto(entity);
+        RegisterResponseDto response = userRegisterMapper.toDto(entity);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PostMapping("/company/register")
-    public ResponseEntity<RegisterResponseDto> registerCompany(
-            @RequestBody RegisterDto registerDto) {
+    public ResponseEntity<RegisterResponseDto> registerCompany(@RequestBody RegisterDto registerDto) {
         User entity = userService.registerCompany(registerDto);
-        RegisterResponseDto response = userMapper.toDto(entity);
+        RegisterResponseDto response = userRegisterMapper.toDto(entity);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
+//endregion
+//region user login controller
+    @PostMapping("/user/login")
+    public ResponseEntity<LoginResponseDto> loginUser(@RequestBody LoginDto loginDto){
+        User entity = userService.loginUser(loginDto);
+        LoginResponseDto response = userLoginMapper.toDto(entity);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/admin/login")
+    public ResponseEntity<LoginResponseDto> loginAdmin(@RequestBody LoginDto loginDto){
+        User entity = userService.loginAdmin(loginDto);
+        LoginResponseDto response = userLoginMapper.toDto(entity);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/company/login")
+    public ResponseEntity<LoginResponseDto> loginCompany(@RequestBody LoginDto loginDto){
+        User entity = userService.loginCompany(loginDto);
+        LoginResponseDto response = userLoginMapper.toDto(entity);
+        return ResponseEntity.ok(response);
+    }
+    //endregion
 }
