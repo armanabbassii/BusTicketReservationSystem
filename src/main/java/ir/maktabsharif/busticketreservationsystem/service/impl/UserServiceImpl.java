@@ -2,8 +2,11 @@ package ir.maktabsharif.busticketreservationsystem.service.impl;
 
 import ir.maktabsharif.busticketreservationsystem.domain.entity.User;
 import ir.maktabsharif.busticketreservationsystem.domain.enums.USER_ROLE;
-import ir.maktabsharif.busticketreservationsystem.dto.UserRegisterDto;
+import ir.maktabsharif.busticketreservationsystem.domain.enums.USER_STATUS;
+import ir.maktabsharif.busticketreservationsystem.dto.LoginDto;
+import ir.maktabsharif.busticketreservationsystem.dto.RegisterDto;
 import ir.maktabsharif.busticketreservationsystem.repository.UserRepository;
+import ir.maktabsharif.busticketreservationsystem.service.BaseUserService;
 import ir.maktabsharif.busticketreservationsystem.service.UserService;
 import ir.maktabsharif.busticketreservationsystem.util.PasswordUtil;
 import lombok.RequiredArgsConstructor;
@@ -15,53 +18,72 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
-    private UserRepository userRepository;
-    private User user;
+    private final UserRepository userRepository;
+    private final BaseUserService baseUserService;
+
 
     @Override
     public Optional<User> findByUsername(String username) {
-        return Optional.empty();
+        return userRepository.findByUsername(username);
     }
 
-
     @Override
-    public User register(UserRegisterDto userRegisterDto) {
-        if (userRegisterDto.username() == null || userRegisterDto.password() == null) {
-            throw new RuntimeException("Required Fields missing null");
-        }
-        if (userRepository.findByUsername(userRegisterDto.username()).isPresent()) {
-            throw new RuntimeException("username is exist, please choose another username");
-        }
-        if (user.getUserRole() == USER_ROLE.ADMIN_ROLE) {
-            System.out.println(user.getUserRole());
-        } else if (user.getUserRole() == USER_ROLE.USER_ROLE) {
-            System.out.println(user.getUserRole());
-        } else if (user.getUserRole() == USER_ROLE.COMPANY_ROLE) {
-            System.out.println(user.getUserRole());
-        }
-        String hashedPassword = PasswordUtil.encode(userRegisterDto.password());
-        User user = User.builder()
-                .username(userRegisterDto.username())
-                .password(hashedPassword)
-                .email(userRegisterDto.email())
-                .build();
+    public User registerUser(RegisterDto registerDto) {
+        User user = baseUserService.register(registerDto);
+        user.setUserRole(USER_ROLE.USER_ROLE);
+        user.setUserStatus(USER_STATUS.ACTIVATED);
         return userRepository.save(user);
     }
 
     @Override
-    public User login(String username, String password) {
-        if (username == null || password == null) {
-            throw new RuntimeException("Invalid username or password");
-        }
+    public User registerAdmin(RegisterDto registerDto) {
+        User user = baseUserService.register(registerDto);
+        user.setUserRole(USER_ROLE.ADMIN_ROLE);
+        user.setUserStatus(USER_STATUS.ACTIVATED);
+        return userRepository.save(user);
+    }
 
-        User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("invalid username"));
+    @Override
+    public User registerCompany(RegisterDto registerDto) {
+        User user = baseUserService.register(registerDto);
+        user.setUserRole(USER_ROLE.COMPANY_ROLE);
+        user.setUserStatus(USER_STATUS.DEACTIVATED);
+        return userRepository.save(user);
+    }
 
-        if (!PasswordUtil.verify(password, user.getPassword())) {
-            throw new RuntimeException("invalid password");
+    @Override
+    public User loginUser(LoginDto loginDto) {
+        User user = baseUserService.login(loginDto);
+        if (user.getUserRole() != USER_ROLE.USER_ROLE) {
+            throw new RuntimeException("access denied");
         }
+        if (user.getUserStatus() != USER_STATUS.ACTIVATED)
+            throw new RuntimeException("your account is not active");
         return user;
     }
+
+    @Override
+    public User loginAdmin(LoginDto loginDto) {
+        User user = baseUserService.login(loginDto);
+        if (user.getUserRole() != USER_ROLE.ADMIN_ROLE) {
+            throw new RuntimeException("access denied");
+        }
+        if (user.getUserStatus() != USER_STATUS.ACTIVATED)
+            throw new RuntimeException("your account is not active");
+        return user;
+    }
+
+    @Override
+    public User loginCompany(LoginDto loginDto) {
+        User user = baseUserService.login(loginDto);
+        if (user.getUserRole() != USER_ROLE.COMPANY_ROLE) {
+            throw new RuntimeException("access denied");
+        }
+        if (user.getUserStatus() != USER_STATUS.ACTIVATED)
+            throw new RuntimeException("your account is not active");
+        return user;
+    }
+
 
     @Override
     public User save(User entity) {
