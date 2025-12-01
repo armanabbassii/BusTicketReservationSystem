@@ -1,0 +1,13 @@
+package ir.maktabsharif.busticketreservationsystem;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class BusTicketReservationSystemApplicationTests {
+
+    @Test
+    void contextLoads() {
+    }
+
+}
