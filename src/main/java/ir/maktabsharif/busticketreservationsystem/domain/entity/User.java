@@ -22,9 +22,9 @@ public class User {
     private String username;
     private String password;
     private String email;
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private USER_ROLE userRole;
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private USER_STATUS userStatus;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)

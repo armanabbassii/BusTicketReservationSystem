@@ -20,7 +20,7 @@ public class Purchase {
     private LocalDateTime purchaseTime;
     private Double pricePaid;
     private int quantity;
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private PURCHASE_STATUS purchaseStatus;
     // NEW,PENDING,DONE,CANCELED
     @ManyToOne(fetch = FetchType.LAZY)

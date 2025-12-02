@@ -5,6 +5,7 @@ import ir.maktabsharif.busticketreservationsystem.domain.enums.USER_ROLE;
 import ir.maktabsharif.busticketreservationsystem.domain.enums.USER_STATUS;
 import ir.maktabsharif.busticketreservationsystem.dto.LoginDto;
 import ir.maktabsharif.busticketreservationsystem.dto.RegisterDto;
+import ir.maktabsharif.busticketreservationsystem.exception.UserException;
 import ir.maktabsharif.busticketreservationsystem.repository.UserRepository;
 import ir.maktabsharif.busticketreservationsystem.service.BaseUserService;
 import ir.maktabsharif.busticketreservationsystem.service.UserService;
@@ -57,10 +58,10 @@ public class UserServiceImpl implements UserService {
     public User loginUser(LoginDto loginDto) {
         User user = baseUserService.login(loginDto);
         if (user.getUserRole() != USER_ROLE.USER_ROLE) {
-            throw new RuntimeException("access denied");
+            throw new UserException("access denied");
         }
         if (user.getUserStatus() != USER_STATUS.ACTIVATED)
-            throw new RuntimeException("your account is not active");
+            throw new UserException("your account is not active");
         return user;
     }
 
@@ -68,10 +69,10 @@ public class UserServiceImpl implements UserService {
     public User loginAdmin(LoginDto loginDto) {
         User user = baseUserService.login(loginDto);
         if (user.getUserRole() != USER_ROLE.ADMIN_ROLE) {
-            throw new RuntimeException("access denied");
+            throw new UserException("access denied");
         }
         if (user.getUserStatus() != USER_STATUS.ACTIVATED)
-            throw new RuntimeException("your account is not active");
+            throw new UserException("your account is not active");
         return user;
     }
 
@@ -79,10 +80,10 @@ public class UserServiceImpl implements UserService {
     public User loginCompany(LoginDto loginDto) {
         User user = baseUserService.login(loginDto);
         if (user.getUserRole() != USER_ROLE.COMPANY_ROLE) {
-            throw new RuntimeException("access denied");
+            throw new UserException("access denied");
         }
         if (user.getUserStatus() != USER_STATUS.ACTIVATED)
-            throw new RuntimeException("your account is not active");
+            throw new UserException("your account is not active");
         return user;
     }
 //endregion

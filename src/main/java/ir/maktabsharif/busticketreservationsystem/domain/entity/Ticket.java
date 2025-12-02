@@ -26,7 +26,7 @@ public class Ticket {
     private Integer totalSeats;
     private Integer availableSeats;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private TICKET_TYPE ticketType;
     //    BUS,TRAIN,AIRPLANE
     @ManyToOne(fetch = FetchType.LAZY)
