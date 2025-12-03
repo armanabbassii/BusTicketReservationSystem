@@ -1,14 +1,11 @@
 package ir.maktabsharif.busticketreservationsystem.controller;
 
 import ir.maktabsharif.busticketreservationsystem.domain.entity.User;
-import ir.maktabsharif.busticketreservationsystem.dto.RegisterDto;
-import ir.maktabsharif.busticketreservationsystem.dto.RegisterResponseDto;
-import ir.maktabsharif.busticketreservationsystem.dto.UserChangeStatusDto;
-import ir.maktabsharif.busticketreservationsystem.dto.UserChangeStatusResponseDto;
+import ir.maktabsharif.busticketreservationsystem.dto.user.UserChangeStatusDto;
+import ir.maktabsharif.busticketreservationsystem.dto.user.UserChangeStatusResponseDto;
 import ir.maktabsharif.busticketreservationsystem.mapper.UserChangeStatusMapper;
 import ir.maktabsharif.busticketreservationsystem.service.UserChangeStatus;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

@@ -1,14 +1,17 @@
 package ir.maktabsharif.busticketreservationsystem.controller;
 
 import ir.maktabsharif.busticketreservationsystem.domain.entity.Ticket;
-import ir.maktabsharif.busticketreservationsystem.dto.AddTicketDto;
-import ir.maktabsharif.busticketreservationsystem.dto.TicketResponseDto;
+import ir.maktabsharif.busticketreservationsystem.domain.enums.TICKET_TYPE;
+import ir.maktabsharif.busticketreservationsystem.dto.ticket.AddTicketDto;
+import ir.maktabsharif.busticketreservationsystem.dto.ticket.TicketResponseDto;
 import ir.maktabsharif.busticketreservationsystem.mapper.TicketMapper;
 import ir.maktabsharif.busticketreservationsystem.service.TicketService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -17,7 +20,6 @@ import java.util.List;
 public class TicketController {
     private final TicketMapper ticketMapper;
     private final TicketService ticketService;
-
 
     @PostMapping("/{companyId}/add")
     public ResponseEntity<TicketResponseDto> addTicket(
@@ -44,4 +46,21 @@ public class TicketController {
         Ticket ticket = ticketService.getTicketById(ticketId);
         return ResponseEntity.ok(ticketMapper.toDto(ticket));
     }
+
+    @GetMapping("/ticketList")
+    public ResponseEntity<List<TicketResponseDto>> ticketList(
+            @RequestParam String departureCity,
+            @RequestParam String destinationCity,
+            @RequestParam LocalDate arrivalTime) {
+        List<Ticket> tickets = ticketService.getTicketList(departureCity, destinationCity, arrivalTime);
+        return ResponseEntity.ok(ticketMapper.toDtoList(tickets));
+    }
+
+    @GetMapping("/ticketType")
+    public ResponseEntity<List<TicketResponseDto>> searchByType(
+            @RequestParam TICKET_TYPE ticketType) {
+        List<Ticket> tickets = ticketService.findByTicketType(ticketType);
+        return ResponseEntity.ok(ticketMapper.toDtoList(tickets));
+    }
+
 }

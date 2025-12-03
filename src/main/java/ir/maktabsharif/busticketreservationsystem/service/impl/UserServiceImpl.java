@@ -3,13 +3,12 @@ package ir.maktabsharif.busticketreservationsystem.service.impl;
 import ir.maktabsharif.busticketreservationsystem.domain.entity.User;
 import ir.maktabsharif.busticketreservationsystem.domain.enums.USER_ROLE;
 import ir.maktabsharif.busticketreservationsystem.domain.enums.USER_STATUS;
-import ir.maktabsharif.busticketreservationsystem.dto.LoginDto;
-import ir.maktabsharif.busticketreservationsystem.dto.RegisterDto;
+import ir.maktabsharif.busticketreservationsystem.dto.loginAndRegister.LoginDto;
+import ir.maktabsharif.busticketreservationsystem.dto.loginAndRegister.RegisterDto;
 import ir.maktabsharif.busticketreservationsystem.exception.UserException;
 import ir.maktabsharif.busticketreservationsystem.repository.UserRepository;
 import ir.maktabsharif.busticketreservationsystem.service.BaseUserService;
 import ir.maktabsharif.busticketreservationsystem.service.UserService;
-import ir.maktabsharif.busticketreservationsystem.util.PasswordUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -31,5 +31,4 @@ public class Purchase {
     @JoinColumn(name = "ticket_id")
     private Ticket ticket;
 // many seats from one ticket
-    //، یا چند صندلی از یک بلیت
 }

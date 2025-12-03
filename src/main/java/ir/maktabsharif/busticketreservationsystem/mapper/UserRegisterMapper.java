@@ -2,8 +2,8 @@ package ir.maktabsharif.busticketreservationsystem.mapper;
 
 
 import ir.maktabsharif.busticketreservationsystem.domain.entity.User;
-import ir.maktabsharif.busticketreservationsystem.dto.RegisterDto;
-import ir.maktabsharif.busticketreservationsystem.dto.RegisterResponseDto;
+import ir.maktabsharif.busticketreservationsystem.dto.loginAndRegister.RegisterDto;
+import ir.maktabsharif.busticketreservationsystem.dto.loginAndRegister.RegisterResponseDto;
 
 import org.springframework.stereotype.Component;
 

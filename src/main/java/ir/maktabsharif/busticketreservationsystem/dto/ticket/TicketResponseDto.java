@@ -1,9 +1,8 @@
-package ir.maktabsharif.busticketreservationsystem.dto;
+package ir.maktabsharif.busticketreservationsystem.dto.ticket;
 
 import ir.maktabsharif.busticketreservationsystem.domain.enums.TICKET_TYPE;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public record TicketResponseDto(
         Long ticketId,
