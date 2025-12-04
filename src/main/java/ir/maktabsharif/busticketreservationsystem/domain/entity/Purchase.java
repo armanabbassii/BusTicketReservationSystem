@@ -4,7 +4,7 @@ import ir.maktabsharif.busticketreservationsystem.domain.enums.PURCHASE_STATUS;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Builder
 @Getter
@@ -17,9 +17,10 @@ public class Purchase {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long purchaseId;
     private String purchaseNumber;
-    private LocalDateTime purchaseTime;
+    private LocalDate purchaseTime;
     private Double pricePaid;
     private int quantity;
+    private String gender;
     @Enumerated(EnumType.STRING)
     private PURCHASE_STATUS purchaseStatus;
     // NEW,PENDING,DONE,CANCELED

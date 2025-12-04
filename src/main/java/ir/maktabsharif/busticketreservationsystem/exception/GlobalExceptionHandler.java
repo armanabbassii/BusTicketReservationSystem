@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.time.Instant;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-
+// custom exception for entire local error
+//
     private ExceptionResponse buildResponse(
             String message,
             HttpStatus status,
@@ -38,6 +39,18 @@ public class GlobalExceptionHandler {
             Exception ex, HttpServletRequest request) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(buildResponse("Internal Server Error", HttpStatus.INTERNAL_SERVER_ERROR, request));
+    }
+
+    @ExceptionHandler(PurchaseException.class)
+    public ResponseEntity<ExceptionResponse> handlePurchase(PurchaseException ex, HttpServletRequest request) {
+
+        ExceptionResponse response = buildResponse(
+                ex.getMessage(),
+                HttpStatus.BAD_REQUEST,
+                request
+        );
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 }
 

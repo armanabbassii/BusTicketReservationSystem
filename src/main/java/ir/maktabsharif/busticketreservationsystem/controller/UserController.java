@@ -27,6 +27,9 @@ public class UserController {
         RegisterResponseDto response = userRegisterMapper.toDto(entity);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
+    // user service: (abstract class)
+    // admin service (impl) single - debugger
+    // company service (impl)
 
     @PostMapping("/admin/register")
     public ResponseEntity<RegisterResponseDto> registerAdmin(@RequestBody RegisterDto registerDto) {
